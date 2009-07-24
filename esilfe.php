@@ -3,7 +3,7 @@
 Plugin Name: etruel Stock in list for eshop plugin
 Plugin URI: http://www.netmdp.com/2009/07/esilfe-plugin/
 Description: Show a checkbox clickable of "out of Stock" in one column in the list of posts then you do not need edit a post only for change this value.  If the user can´t (eshop) then only see if have stock.
-Version: 0.1
+Version: 0.1c
 Author: etruel
 Author URI: http://www.netmdp.com
 */
@@ -32,7 +32,7 @@ define('STOCK_IN_LIST_CURRENT_VERSION', '0.1' );
 define('STOCK_IN_LIST_COLUMN', 'control_stock_in_list');
 
 // i18n plugin domain 
-define('STOCK_IN_LIST_I18N_DOMAIN', 'wp-esilfe');
+define('STOCK_IN_LIST_I18N_DOMAIN', 'etruel-stock-in-list-for-eshop');
 if ( !defined( 'WP_PLUGIN_URL' ) )
 	define( 'WP_PLUGIN_URL', WP_CONTENT_URL. '/plugins' );
 if ( !defined( 'WP_PLUGIN_DIR' ) )
@@ -46,16 +46,16 @@ define("SIL_PLUGINFULLURL", WP_PLUGIN_URL . SIL_PLUGINPATH );
 function esilfe_load_textdomain() {
 	if ( function_exists('load_plugin_textdomain') ) {
 		if ( !defined('WP_PLUGIN_DIR') ) {
-				load_plugin_textdomain('wp-esilfe', str_replace( ABSPATH, '', dirname(__FILE__) ) . '/');
+				load_plugin_textdomain('etruel-stock-in-list-for-eshop', str_replace( ABSPATH, '', dirname(__FILE__) ) . '/');
 		} else {
-			load_plugin_textdomain('wp-esilfe', false, dirname(plugin_basename(__FILE__)) . '/');
+			load_plugin_textdomain('etruel-stock-in-list-for-eshop', false, dirname(plugin_basename(__FILE__)) . '/');
 		}
 	}
 }
 /**
  * Plugin activation
  */
-add_action('activate_wp-etruel-silfe/wp-etruel-silfe.php','stock_in_list_plugin_activation');
+add_action('activate_wp-etruel-silfe/esilfe.php','stock_in_list_plugin_activation');
 function stock_in_list_plugin_activation() {
 	// Add all options, nothing already installed
 }
@@ -79,7 +79,7 @@ function admin_sil_col_css() {
 		}
 		jQuery.post("<?php echo SIL_PLUGINFULLURL; ?>stockchg.php",{id:post,act:curval},function(datos){
 					if(datos!="YES"){
-						alert("ERROR: El valor no fue grabado en la base de datos");
+						alert("<?php _e('ERROR: El valor no fue grabado en la base de datos'); ?>");
 						jQuery("#stk"+post).html('<a href="JavaScript:void(0);" onclick="stockchg('+post+',\''+curval+'\');return false;"><img src="'+imagenno+'"></a>');
 					}else{ 
 						jQuery("#stk"+post).html('<a href="JavaScript:void(0);" onclick="stockchg('+post+',\''+curval+'\');return false;"><img src="'+imagen+'"></a>');
@@ -102,7 +102,7 @@ function silfe_make_checkbox($column_name, $id) {
 	if ($column_name == STOCK_IN_LIST_COLUMN) {
 	 	get_currentuserinfo() ;
 		if(current_user_can('eShop')){
-			echo '<div id="stk'.$id.'"><a href="JavaScript:void(0);" onclick="stockchg('.$id.',\''.silfe_instock_meta($id).'\');return false;"><img src="' . SIL_PLUGINFULLURL . ((silfe_instock_meta($id)=='Yes') ? 'yes.png' : 'no.png') .' "></a></div>';
+			echo '<div id="stk'.$id.'"><a title="'.__('Cambiar Estado.').'" href="JavaScript:void(0);" onclick="stockchg('.$id.',\''.silfe_instock_meta($id).'\');return false;"><img src="' . SIL_PLUGINFULLURL . ((silfe_instock_meta($id)=='Yes') ? 'yes.png' : 'no.png') .' "></a></div>';
 		}else{
 			echo '<div id="stk'.$id.'"><img src="' . SIL_PLUGINFULLURL . ((silfe_instock_meta($id)=='Yes') ? 'yes.png' : 'no.png') .' "></div>';
 		}

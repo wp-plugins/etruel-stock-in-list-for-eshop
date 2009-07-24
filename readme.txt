@@ -3,8 +3,8 @@ Contributors: etruel
 Donate link: http://www.netmdp.com/temas/wordpress/
 Tags: Stock, plugin, edit-in-place, eshop, e-shop, esilfe, column
 Requires at least: 2.6
-Tested up to: 2.8.1
-Stable tag: 0.1
+Tested up to: 2.8.2
+Stable tag: 0.1c
 
 Plugin for eshop plugin. Show a clickable "out of Stock" in one column in the list of posts then you do not need edit a post for change this value.
 
@@ -47,6 +47,10 @@ Yeah.
 1. The column in Post's List Admin page.
 
 == Changelog ==
+
+= 0.1c =
+* upgrade for WP2.8.2
+* fixed little bugs
 
 = 0.1 =
 * initial release
